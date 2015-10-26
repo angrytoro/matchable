@@ -1,0 +1,139 @@
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <title>表单联动插件</title>
+    <meta name="author" content="angrytoro">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/8.9.1/styles/monokai_sublime.min.css" rel="stylesheet">
+    <style>
+      header {
+        background-color: #0078D8;
+      }
+      header a, header a:hover, header a:focus {
+        color: #fff;
+      }
+      .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+      }
+      .jumbotron {
+        background-color: #fff;
+      }
+      .btn-info {
+        border-radius: 0;
+      }
+      .btn-info, .btn-info:hover, .btn-info:focus {
+        background-color: #0078D8;
+        border-color: #0078D8;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">首页</a>
+        </div>
+      </div>
+    </header>
+    <div class="jumbotron">
+      <div class="container" style="text-align:center">
+        <p style="font-size:40px;">
+          jquery插件<a href="#">matchable</a>
+          <br>
+          解决复杂表单联动问题
+        </p>
+        <a href="#" class="btn btn-info btn-lg">访问github</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <form class="col-md-4">
+          <div class="form-group">
+            <label class="radio-inline">
+              <input type="radio" name="demon1" value="1" checked="checked">开启
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="demon1" value="2">关闭
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="checkbox-inline">
+              <input type="checkbox" name="demon2" value="1" checked="checked">value=1
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="demon2" value="2">value=2
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="demon2" value="3">value=3
+            </label>
+          </div>
+          <div class="form-group" data-matchable='m1[1]&m2[1]' data-matchable-type="disabled">
+            <label for="">当m1=1，m2=1的时候可以编辑，否则是disabled</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group" data-matchable="m1[2]|m2[2]" data-matchable-type="active">
+            <label for="">当m1=2或者m2=2的时候显示，否则是隐藏的，并且是disabled的</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group" data-matchable="m2[3]">
+            <label for="">默认不设置data-matchable-type的时候，相应的表单元素是不会disabled的。</label>
+            <input type="text" class="form-control">
+          </div>
+        </form>
+        <div class="col-md-8">
+          <pre>
+            <code class="xml">
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;radio-inline&quot;&gt;
+              &lt;input type=&quot;radio&quot; name=&quot;demon1&quot; value=&quot;1&quot; checked=&quot;checked&quot;&gt;开启
+            &lt;/label&gt;
+            &lt;label class=&quot;radio-inline&quot;&gt;
+              &lt;input type=&quot;radio&quot; name=&quot;demon1&quot; value=&quot;2&quot; &gt;关闭
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;checkbox-inline&quot;&gt;
+              &lt;input type=&quot;checkbox&quot; name=&quot;demon2&quot; value=&quot;1&quot; checked=&quot;checked&quot;&gt;value=1
+            &lt;/label&gt;
+            &lt;label class=&quot;checkbox-inline&quot;&gt;
+              &lt;input type=&quot;checkbox&quot; name=&quot;demon2&quot; value=&quot;2&quot;&gt;value=2
+            &lt;/label&gt;
+            &lt;label class=&quot;checkbox-inline&quot;&gt;
+              &lt;input type=&quot;checkbox&quot; name=&quot;demon2&quot; value=&quot;3&quot;&gt;value=3
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;form-group&quot; data-matchable=&#39;m1[1]&amp;m2[1]&#39; data-matchable-type=&quot;disabled&quot;&gt;
+            &lt;label for=&quot;&quot;&gt;当m1=1，m2=1的时候可以编辑，否则是disabled&lt;/label&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;form-group&quot; data-matchable=&quot;m1[2]|m2[2]&quot; data-matchable-type=&quot;active&quot;&gt;
+            &lt;label for=&quot;&quot;&gt;当m1=2或者m2=2的时候显示，否则是隐藏的，并且是disabled的&lt;/label&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;form-group&quot; data-matchable=&quot;m2[3]&quot;&gt;
+            &lt;label for=&quot;&quot;&gt;默认不设置data-matchable-type的时候，相应的表单元素是不会disabled的。&lt;/label&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+          &lt;/div&gt;
+            </code>
+            <code class="javascript">
+              $.matchable.register('m1',$('[name="demon1"]'), 'radio');
+              $.matchable.register('m2',$('[name="demon2"]'), 'checkbox');
+              $.matchable.action();
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
+    <script src="jquery.matchable.js"></script>
+    <script type="text/javascript">
+      $.matchable.register('m1',$('[name="demon1"]'), 'radio');
+      $.matchable.register('m2',$('[name="demon2"]'), 'checkbox');
+      $.matchable.action();
+      hljs.initHighlightingOnLoad();
+    </script>
+  </body>
+</html>
