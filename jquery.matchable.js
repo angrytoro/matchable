@@ -7,10 +7,21 @@
 			matchers: {
 				radio: radioMatcher,
 				checkbox: checkboxMatcher,
-				select: selectMatcher
+				select: selectMatcher,
+				text: textSelecter
 			},
 			register: function(name, element, type) {
 				element.data('matchable-name', name);
+				if(!type) {
+					if(element[0].tagName.toLocaleLowerCase() === 'select') {
+						type = 'select';
+					} else {
+						type = element.attr('type');
+						if(!type || type != 'radio' && type != 'checkbox') {
+							type == 'text';
+						}
+					}
+				}
 				this.cache[name] = generate(element, type);
 			},
 			action: function(element) {
@@ -141,6 +152,17 @@
 
 	selectMatcher.prototype.check = function(value) {
 		return this.element.val() === value;
+	};
+
+	function textSelecter(element) {
+		this.element = element;
+		this.element.bind('blur', function(e) {
+			$.matchable.action($(e.currentTarget));
+		});
+	};
+
+	textSelecter.prototype.check = function(value) {
+		return this.element.val() == value;
 	};
 
 })(jQuery);

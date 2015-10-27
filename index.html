@@ -27,6 +27,10 @@
         background-color: #0078D8;
         border-color: #0078D8;
       }
+      h2.bg-info {
+        background-color: #0078D8;
+        color: #fff;
+      }
     </style>
   </head>
   <body>
@@ -44,82 +48,114 @@
           <br>
           解决复杂表单联动问题
         </p>
-        <a href="#" class="btn btn-info btn-lg">访问github</a>
+        <a href="https://github.com/angrytoro/matchable" class="btn btn-info btn-lg" target="_blank">访问github</a>
       </div>
     </div>
     <div class="container">
       <div class="row">
+        <div class="list-group col-md-4">
+          <a href="#function" class="list-group-item">方法</a>
+          <a href="#attribute" class="list-group-item">属性</a>
+          <!-- <a href="#" class="list-group-item">使用说明</a> -->
+        </div>
+        <div class="col-md-8">
+          <h2 id="function">方法</h2>
+          <pre>1.$.matchable.register:function(name, element, type)。该方法用于注册联动器，name:联动器的名字，element:jquery对象，当该对象的值做出改变的时候，相应的联动对象会做出相应的改变。type:表示联动器的类型,可以不填，提供的类型有[radio,checkbox,select,text].
+2.$.matchable.action:function(element)。该方法在注册完联动器的时候必须执行一次$.matchable.action()，显示或者隐藏页面的联动对象。
+          </pre>
+          <h2 id="attribute">属性</h2>
+          <pre>1.data-matchable:作为某个联动对象的属性，用来适配联动器，对应的值可以自由组合，用来指示当联动器的组合值为true的时候显示
+2.data-matchable-type：用来指示联动对象在隐藏的时候该采取什么策略1.disabled：表示所有该联动对象下的表单对象都disabled但是不隐藏，2.active：表示所有该联动对象下的表单对象都disabled并且不隐藏。如果不设置，那么默认只有隐藏</pre>
+        </div>
+      </div>
+    </div>
+    <h1 style="text-align:center">案例</h1>
+    <div class="container">
+      <div class="row">
         <form class="col-md-4">
+          <h2 class="bg-info">显示控制开关</h2>
           <div class="form-group">
+            <label for="">m1:</label>
             <label class="radio-inline">
-              <input type="radio" name="demon1" value="1" checked="checked">开启
+              <input type="radio" name="demo1" value="1" checked="checked">开启
             </label>
             <label class="radio-inline">
-              <input type="radio" name="demon1" value="2">关闭
+              <input type="radio" name="demo1" value="2">关闭
             </label>
           </div>
           <div class="form-group">
+            <label for="">m2:</label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="demon2" value="1" checked="checked">value=1
+              <input type="checkbox" name="demo2" value="1" checked="checked">value=1
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="demon2" value="2">value=2
+              <input type="checkbox" name="demo2" value="2" checked="checked">value=2
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="demon2" value="3">value=3
+              <input type="checkbox" name="demo2" value="3" checked="checked">value=3
             </label>
           </div>
+          <div class="form-group">
+            <label>m3</label>
+            <select name="demo3" class="form-control">
+              <option value="a">A</option>
+              <option value="b">B</option>
+              <option value="c">C</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">m4</label>
+            <input name="demo4" class="form-control" type="text" value="abc">
+          </div>
+          <h2 class="bg-info">显示控制区域</h2>
           <div class="form-group" data-matchable='m1[1]&m2[1]' data-matchable-type="disabled">
-            <label for="">当m1=1，m2=1的时候可以编辑，否则是disabled</label>
+            <label for="">当m1=1并且m2的value=1被选中的时候可以编辑，否则是disabled</label>
             <input type="text" class="form-control">
           </div>
           <div class="form-group" data-matchable="m1[2]|m2[2]" data-matchable-type="active">
-            <label for="">当m1=2或者m2=2的时候显示，否则是隐藏的，并且是disabled的</label>
+            <label for="">当m1=2或者m2的value=2被选中的时候显示，否则是隐藏的，并且是disabled的</label>
             <input type="text" class="form-control">
           </div>
           <div class="form-group" data-matchable="m2[3]">
-            <label for="">默认不设置data-matchable-type的时候，相应的表单元素是不会disabled的。</label>
+            <label for="">当m2的value=3被选中的时候显示，默认不设置data-matchable-type的时候，相应的表单元素是不会disabled的。</label>
             <input type="text" class="form-control">
+          </div>
+          <div class="form-group" data-matchable="m1[1]|m3[a]">
+            <label for="">当m1=1或者m3=a的时候显示</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group" data-matchable="m4[abc]">
+            <label for="">当m4=abc的时候显示</label>
           </div>
         </form>
         <div class="col-md-8">
           <pre>
             <code class="xml">
-          &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;radio-inline&quot;&gt;
-              &lt;input type=&quot;radio&quot; name=&quot;demon1&quot; value=&quot;1&quot; checked=&quot;checked&quot;&gt;开启
-            &lt;/label&gt;
-            &lt;label class=&quot;radio-inline&quot;&gt;
-              &lt;input type=&quot;radio&quot; name=&quot;demon1&quot; value=&quot;2&quot; &gt;关闭
-            &lt;/label&gt;
-          &lt;/div&gt;
-          &lt;div class=&quot;form-group&quot;&gt;
-            &lt;label class=&quot;checkbox-inline&quot;&gt;
-              &lt;input type=&quot;checkbox&quot; name=&quot;demon2&quot; value=&quot;1&quot; checked=&quot;checked&quot;&gt;value=1
-            &lt;/label&gt;
-            &lt;label class=&quot;checkbox-inline&quot;&gt;
-              &lt;input type=&quot;checkbox&quot; name=&quot;demon2&quot; value=&quot;2&quot;&gt;value=2
-            &lt;/label&gt;
-            &lt;label class=&quot;checkbox-inline&quot;&gt;
-              &lt;input type=&quot;checkbox&quot; name=&quot;demon2&quot; value=&quot;3&quot;&gt;value=3
-            &lt;/label&gt;
-          &lt;/div&gt;
           &lt;div class=&quot;form-group&quot; data-matchable=&#39;m1[1]&amp;m2[1]&#39; data-matchable-type=&quot;disabled&quot;&gt;
-            &lt;label for=&quot;&quot;&gt;当m1=1，m2=1的时候可以编辑，否则是disabled&lt;/label&gt;
+            &lt;label for=&quot;&quot;&gt;当m1=1并且m2的value=1被选中的时候可以编辑，否则是disabled&lt;/label&gt;
             &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
           &lt;/div&gt;
           &lt;div class=&quot;form-group&quot; data-matchable=&quot;m1[2]|m2[2]&quot; data-matchable-type=&quot;active&quot;&gt;
-            &lt;label for=&quot;&quot;&gt;当m1=2或者m2=2的时候显示，否则是隐藏的，并且是disabled的&lt;/label&gt;
+            &lt;label for=&quot;&quot;&gt;当m1=2或者m2的value=2被选中的时候显示，否则是隐藏的，并且是disabled的&lt;/label&gt;
             &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
           &lt;/div&gt;
           &lt;div class=&quot;form-group&quot; data-matchable=&quot;m2[3]&quot;&gt;
-            &lt;label for=&quot;&quot;&gt;默认不设置data-matchable-type的时候，相应的表单元素是不会disabled的。&lt;/label&gt;
+            &lt;label for=&quot;&quot;&gt;当m2的value=3被选中的时候显示，默认不设置data-matchable-type的时候，相应的表单元素是不会disabled的。&lt;/label&gt;
             &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;form-group&quot; data-matchable=&quot;m1[1]|m3[a]&quot;&gt;
+            &lt;label for=&quot;&quot;&gt;当m1=1或者m3=a的时候显示&lt;/label&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;form-group&quot; data-matchable=&quot;m4[abc]&quot;&gt;
+            &lt;label for=&quot;&quot;&gt;当m4=abc的时候显示&lt;/label&gt;
           &lt;/div&gt;
             </code>
             <code class="javascript">
-              $.matchable.register('m1',$('[name="demon1"]'), 'radio');
-              $.matchable.register('m2',$('[name="demon2"]'), 'checkbox');
+              $.matchable.register('m1',$('[name="demo1"]'));
+              $.matchable.register('m2',$('[name="demo2"]'));
+              $.matchable.register('m3',$('[name="demo3"]'));
+              $.matchable.register('m4',$('[name="demo4"]'));
               $.matchable.action();
             </code>
           </pre>
@@ -130,8 +166,10 @@
     <script src="http://cdn.bootcss.com/highlight.js/8.9.1/highlight.min.js"></script>
     <script src="jquery.matchable.js"></script>
     <script type="text/javascript">
-      $.matchable.register('m1',$('[name="demon1"]'), 'radio');
-      $.matchable.register('m2',$('[name="demon2"]'), 'checkbox');
+      $.matchable.register('m1',$('[name="demo1"]'));
+      $.matchable.register('m2',$('[name="demo2"]'));
+      $.matchable.register('m3',$('[name="demo3"]'));
+      $.matchable.register('m4',$('[name="demo4"]'));
       $.matchable.action();
       hljs.initHighlightingOnLoad();
     </script>
