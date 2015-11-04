@@ -156,7 +156,7 @@
 
 	function textSelecter(element) {
 		this.element = element;
-		this.element.bind('blur', function(e) {
+		this.element.bind('change', function(e) {
 			$.matchable.action($(e.currentTarget));
 		});
 	};
